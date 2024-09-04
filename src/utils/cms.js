@@ -13,10 +13,7 @@ export class StoryblokCMS {
     if (!params) return {};
     const uri = params?.slug?.join("/");
     const storyUrl = "cdn/stories/" + uri;
-    const { data } = await this.sbGet(
-      storyUrl,
-      this.getDefaultSBParams()
-    );
+    const { data } = await this.sbGet(storyUrl, this.getDefaultSBParams());
     return data.story;
   }
 
@@ -34,12 +31,83 @@ export class StoryblokCMS {
         "cdn/stories/config",
         this.getDefaultSBParams()
       );
-      return data?.story;
+
+      if (!data?.story?.content) {
+        console.log("CONFIG ERROR: Content not found in the fetched story.");
+        return {};
+      }
+
+      const content = data.story.content;
+
+      return {
+        header: {
+          logotype: content.logotype || {},
+          header_navigation: content.header_navigation || [],
+        },
+        footer: {
+          footer_links: content.footer_links || [],
+          footer_title: content.footer_title || "",
+          footer_textarea: content.footer_textarea || "",
+          footer_logotype: content.footer_logotype || {},
+        },
+      };
     } catch (error) {
       console.log("CONFIG ERROR", error);
       return {};
     }
   }
+
+  // static async getConfig() {
+  //   try {
+  //     const { data } = await this.sbGet(
+  //       "cdn/stories/config",
+  //       this.getDefaultSBParams()
+  //     );
+
+  //     if (!data?.story?.content) {
+  //       console.log("CONFIG ERROR: Content not found in the fetched story.");
+  //       return {};
+  //     }
+
+  //     return {
+  //       header: data?.story?.content || {},
+  //       footer: data?.story?.content || {},
+  //     };
+  //   } catch (error) {
+  //     console.log("CONFIG ERROR", error);
+  //     return {};
+  //   }
+  // }
+
+  // TEST 2:
+  // static async getConfig() {
+  //   try {
+  //     const { data } = await this.sbGet(
+  //       "cdn/stories/config",
+  //       this.getDefaultSBParams()
+  //     );
+
+  //     // Returnerar hela innehållet av storyn (t.ex. config)
+  //     return data?.story?.content || {};
+  //   } catch (error) {
+  //     console.log("CONFIG ERROR", error);
+  //     return {};
+  //   }
+  // }
+
+  // Christoffers kod:
+  // static async getConfig() {
+  //   try {
+  //     const { data } = await this.sbGet(
+  //       "cdn/stories/config",
+  //       this.getDefaultSBParams()
+  //     );
+  //     return data?.story;
+  //   } catch (error) {
+  //     console.log("CONFIG ERROR", error);
+  //     return {};
+  //   }
+  // }
 
   static async generateMetaFromStory(slug) {
     //Read nextjs metadata docs
