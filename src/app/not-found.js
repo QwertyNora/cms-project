@@ -1,5 +1,18 @@
-export default function NotFound() {
-    //Fetch the 404 page from storyblok (this component works as server component aswell)
-    //update this component to render a 404 page
-    return <h1>404 notfound</h1>
+"use client";
+import { StoryblokCMS } from "@/utils/cms";
+export default async function NotFound() {
+  try {
+    const currentStory = await StoryblokCMS.getConfig();
+    const { notfound_title, notfound_description } = currentStory.content;
+    if (!currentStory) throw new Error();
+    console.log(notfound_title);
+    return (
+      <div>
+        <h1>{notfound_title}</h1>
+        <p>Page not found</p>
+      </div>
+    );
+  } catch (error) {
+    console.log(error);
+  }
 }

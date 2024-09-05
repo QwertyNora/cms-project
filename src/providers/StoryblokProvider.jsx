@@ -12,17 +12,20 @@ import ImageCard from "@/components/nestable/ImageCard";
 import Grid from "@/components/nestable/Grid";
 import Button from "@/components/nestable/Button";
 import Footer from "@/components/nestable/Footer";
+import RichText from "@/components/nestable/RichText";
+import Form from "@/components/nestable/Form";
 
 const components = {
   page: Page,
   teaser: Teaser,
-  richtext: RichTextDefault,
   header: Header,
   hero: Hero,
   image_card: ImageCard,
   grid: Grid,
   button: Button,
   footer: Footer,
+  richtext: RichText,
+  form: Form,
 };
 
 storyblokInit({

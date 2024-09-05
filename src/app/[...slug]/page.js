@@ -14,7 +14,7 @@ export async function generateStaticParams() {
 }
 
 //Generates static meta props for each story
-export async function generateMetadata({params}) {
+export async function generateMetadata({ params }) {
   const slug = params.slug.join("/");
   return StoryblokCMS.generateMetaFromStory(slug);
 }

@@ -7,12 +7,9 @@ export default function Layout({ config, children }) {
   return (
     <>
       <div className="min-h-screen flex flex-col">
-        {" "}
-        {/* Full height container */}
-        <Header blok={config.header} />
-        <main className="flex-grow">{children}</main> {/* Main content grows */}
-        <Footer blok={config.footer} />{" "}
-        {/* Footer sticks to the bottom if content is short */}
+        <Header blok={config} />
+        <main className="flex-grow">{children}</main>
+        <Footer blok={config} />{" "}
       </div>
     </>
   );
